@@ -1,0 +1,45 @@
+{
+  "name": "extraction-service",
+  "version": "1.0.0",
+  "description": "Unstructured to Structured Extraction Service with Hexagon Architecture",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:coverage": "vitest --coverage",
+    "dev": "serverless offline start",
+    "deploy": "serverless deploy",
+    "deploy:prod": "serverless deploy --stage production",
+    "load-test": "node load-test.js",
+    "load-test:heavy": "node load-test.js --requests 500 --concurrent 25",
+    "evaluate": "./evaluate.sh",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix"
+  },
+  "keywords": [
+    "extraction",
+    "nlp",
+    "serverless",
+    "aws",
+    "lambda",
+    "hexagon",
+    "clean-architecture"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "serverless": "^3.38.0",
+    "serverless-offline": "^13.3.0",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^3.2.4",
+    "eslint": "^8.55.0",
+    "node-fetch": "^3.3.2",
+    "vitest": "^3.2.4"
+  }
+}

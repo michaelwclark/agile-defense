@@ -1,0 +1,95 @@
+service: extraction-service
+
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  stage: ${opt:stage, 'dev'}
+  region: us-east-1
+  environment:
+    STAGE: ${self:provider.stage}
+    REGION: ${self:provider.region}
+
+functions:
+  health:
+    handler: src/handlers/health.handler
+    events:
+      - http:
+          path: health
+          method: get
+          cors: true
+
+  extract:
+    handler: src/handlers/extract.handler
+    events:
+      - http:
+          path: extract
+          method: post
+          cors: true
+
+  getExtraction:
+    handler: src/handlers/getExtraction.handler
+    events:
+      - http:
+          path: extract/{id}
+          method: get
+          cors: true
+
+  listExtractions:
+    handler: src/handlers/listExtractions.handler
+    events:
+      - http:
+          path: extract
+          method: get
+          cors: true
+
+  # Job Management Endpoints
+  createJob:
+    handler: src/handlers/createJob.handler
+    events:
+      - http:
+          path: jobs
+          method: post
+          cors: true
+
+  getJob:
+    handler: src/handlers/getJob.handler
+    events:
+      - http:
+          path: jobs/{id}
+          method: get
+          cors: true
+
+  listJobs:
+    handler: src/handlers/listJobs.handler
+    events:
+      - http:
+          path: jobs
+          method: get
+          cors: true
+
+  processJob:
+    handler: src/handlers/processJob.handler
+    events:
+      - http:
+          path: jobs/{id}/process
+          method: post
+          cors: true
+
+  uploadDocuments:
+    handler: src/handlers/uploadDocuments.handler
+    events:
+      - http:
+          path: jobs/{id}/documents
+          method: post
+          cors: true
+
+plugins:
+  - serverless-offline
+
+custom:
+  serverless-offline:
+    httpPort: 3000
+    lambdaPort: 3002
+    noPrependStageInUrl: true
